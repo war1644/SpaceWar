@@ -11,14 +11,11 @@ namespace SpaceWar
          public int year=0;
          public int day=0;
          public int kill=0;
-         internal string currentLocation = "地球空间站";
-         internal string currentGalaxy = "PLA";
          internal Planet currentPlanet;
          //货物仓库
          public Dictionary<string,Good> cargo = new Dictionary<string,Good>();
          public string[] goodNameList;
          public int maxCargo = 50;
-        //  Planet currentPlanet;
          Ship currentShip;
 
 
@@ -27,8 +24,9 @@ namespace SpaceWar
             return new string[]
             {
                 "--状态--",
-                $"钱包：{credits}，旅行时间： {year}年{day} 天",
-                $"当前位置{currentPlanet.name}，剩余燃料 {currentShip.currentFuel}"
+                $"Money：{credits}，旅行时间： {year} 年 {day} 天",
+                $"当前位置：{currentPlanet.galaxy} {currentPlanet.name}，剩余燃料： {currentShip.currentFuel}",
+                $"杀敌：{kill}"
             };
         }
 
@@ -40,17 +38,14 @@ namespace SpaceWar
             }
         }
 
-        public Player(string userName,int money,Ship ship)
+        public Player(string userName,int money,Ship ship,Planet planet)
         {
             name = userName;
             credits = money;
             currentShip = ship;
+            SetCurrentLocation(planet);
         }
 
-        public string GetUserName()
-        {
-            return name;
-        }
 
 
         public void AddCredits(int credit)
@@ -59,9 +54,19 @@ namespace SpaceWar
         }
 
 
-        public void SetCurrentLocation(string planet)
+        public void SetCurrentLocation(Planet planet)
         {
-            currentLocation = planet;
+            currentPlanet = planet;
+            if(planet.name == "星系跳跃门")
+            {
+                Game.docked = false;
+                Game.isJump = true;
+            }
+            else
+            {
+                Game.docked = true;
+                Game.isJump = false;
+            }
         }
     
 

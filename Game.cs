@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Collections.Generic;
 namespace SpaceWar
 {
     class Game
@@ -9,27 +10,18 @@ namespace SpaceWar
         public Ship[] ships;
         public Player player;
         // public string historyInput;
-        public bool docked = false;
+        static public bool docked = false;
+        static public bool isJump = true;
         internal static Random rand = new Random();
-        internal Dictionary<string,string[]> galaxy = new Dictionary<string, string[]>
-        {
-            {"* 人马座\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
-            {"* 烈阳星区\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
-            {"* 天狼星区\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
-            {"* 北落师门\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
-            {"* PLA\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
-            {"* 北极星区\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
-        };
-
         public static string GetInput()
         {
-            string choice="";
             bool isInput;
+            string userInput = "";
             do
             {
                 try
                 {
-                    choice = Console.ReadLine();
+                    userInput = Console.ReadLine();
                     isInput = false;
                 }
                 catch (Exception)
@@ -40,7 +32,7 @@ namespace SpaceWar
                 Thread.Sleep(100);
             } while (isInput);
             Console.Clear();
-            return choice;
+            return userInput;
         }
 
         public static byte GetChoice()
@@ -69,8 +61,9 @@ namespace SpaceWar
         {
             CreateGoods();
             CreateShips();
-
-            player = new Player("路漫漫",9999999,ships[1]);
+            CreateGalaxys();
+            Planet planet = Galaxy.list["天狼星区"][0];
+            Player player = new Player("路漫漫",9999999,ships[1],planet);
 
             string info = player.BuyGood(goods[1],5);
             test();
@@ -88,31 +81,40 @@ namespace SpaceWar
             string userInput; 
             do
             {
-                userInput = Display.Show("> ");
-                if(userInput == "buy")
+                Display.Show("> ");
+                userInput = GetInput();
+                if(userInput == "buy" && docked)
                 {
-                    userInput = Display.Show(goods);
-                    choice = byte.Parse(userInput);
+                    Display.Show(goods);
+                    choice = GetChoice();
                     string info = player.BuyGood(goods[choice],5);
                     Display.Show(info);
                 }
-                else if(userInput == "sell")
+                else if(userInput == "sell" && docked)
                 {
-                    userInput = Display.ShowIndex(player.goodNameList);
-                    choice = byte.Parse(userInput);
+                    Display.ShowIndex(player.goodNameList);
+                    choice = GetChoice();
                     string info = player.SellGood(choice);
                     Display.Show(info);
                 }
                 else if(userInput == "state")
                 {
-                    
+                    Display.Show(player.GetState());
                 }
-                else if(userInput == "simulator")
+                else if(userInput == "simulator" && docked)
                 {
                     
                 }
                 else if(userInput == "dock")
                 {
+                    if(!docked)
+                    {
+                        
+                    }
+                    else
+                    {
+                        Display.AutoShow("停泊中");
+                    }
                     
                 }
                 else if(userInput == "save")
@@ -125,7 +127,16 @@ namespace SpaceWar
                 }
                 else if(userInput == "jump")
                 {
-                    
+                    if(isJump)
+                    {
+                        Display.AutoShow("连接星际大门中...", 2000);
+                        Display.AutoShow("连接成功，请选择跳跃星系");
+                        Display.Show(Galaxy.nameList);
+                    }
+                    else
+                    {
+                        Display.Show("ERROR,附近未发现星际大门");
+                    }
                 }
                 else if(userInput == "exit")
                 {
@@ -173,30 +184,21 @@ namespace SpaceWar
             };
         }
 
-        void CreatePlanets()
+        void CreateGalaxys()
         {
-            string[] galaxys = {
-                "* 人马座\n|",
-                "* 烈阳星区\n|",
-                "* 天狼星区\n|",
-                "* 北落师门\n|",
-                "* PLA\n|",
-                "* 北极星区\n|"
-            };
-            foreach (var item in galaxys)
+            foreach (var item in Galaxy.nameList)
             {
-                
+                Planet[] planet = new Planet[rand.Next(2,5)];
+                planet[0] = new Planet("星系跳跃门",item, 0, 0);
+                for (int i = 1; i < planet.Length; i++)
+                {
+                    int planetNumber = rand.Next(1, 500);
+                    int x = rand.Next(-50, 50);
+                    int y = rand.Next(-50, 50);
+                    planet[i] = new Planet($"开发行星{planetNumber}",item,x,y);
+                }
+                Galaxy.list.Add(item,planet);
             }
-            Planet[] planet = new Planet[rand.Next(2,5)];
-            planet[0] = new Planet("星系跳跃门", 0, 0);
-            for (int i = 1; i < planet.Length; i++)
-            {
-                int planetNumber = rand.Next(1, 500);
-                planet[i] = new Planet($"Planet{planetNumber}", $"Trader{planetNumber}",
-                    (rand.Next(-50, 50)+rand.NextDouble()),
-                    (rand.Next(-50, 50)+rand.NextDouble()));
-            }
-            return planet;
         }
 
     }

@@ -14,11 +14,12 @@ namespace SpaceWar
         public List<int> distanceBetweenPlanets = new List<int>();
 
 
-        public Planet(string plantName,int xCordinate,int yCordinate)
+        public Planet(string plantName,string galaxyName,int xCordinate,int yCordinate)
         {
             name = plantName;
             x = xCordinate;
             y = yCordinate;
+            galaxy = galaxyName;
         }
 
         

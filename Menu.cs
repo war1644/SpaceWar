@@ -47,7 +47,7 @@ namespace SpaceWar
                 "2 星系地图"
             };
 
-            public static string[] menuGalaxy = {
+            public static string[] menuGalaxyMap = {
                 "---星系地图---",
                 "* 人马座",
                 "|",
