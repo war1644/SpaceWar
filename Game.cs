@@ -10,7 +10,16 @@ namespace SpaceWar
         public Player player;
         // public string historyInput;
         public bool docked = false;
-        
+        internal static Random rand = new Random();
+        internal Dictionary<string,string[]> galaxy = new Dictionary<string, string[]>
+        {
+            {"* 人马座\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
+            {"* 烈阳星区\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
+            {"* 天狼星区\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
+            {"* 北落师门\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
+            {"* PLA\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
+            {"* 北极星区\n|",new string[]{"1 开发行星A","2 空间站","3 开发行星B","|","4 星系跳跃门"}},
+        };
 
         public static string GetInput()
         {
@@ -164,13 +173,31 @@ namespace SpaceWar
             };
         }
 
-        // static Planet[] CreatePlanets(Random rand)
-        // {
-        //     Planet[] planet = new Planet[rand.Next(100, 250)];
-        //     planet[0] = new Planet("地球", "Mace Windu", 0, 0);
-            
-        //     return planet;
-        // }
+        void CreatePlanets()
+        {
+            string[] galaxys = {
+                "* 人马座\n|",
+                "* 烈阳星区\n|",
+                "* 天狼星区\n|",
+                "* 北落师门\n|",
+                "* PLA\n|",
+                "* 北极星区\n|"
+            };
+            foreach (var item in galaxys)
+            {
+                
+            }
+            Planet[] planet = new Planet[rand.Next(2,5)];
+            planet[0] = new Planet("星系跳跃门", 0, 0);
+            for (int i = 1; i < planet.Length; i++)
+            {
+                int planetNumber = rand.Next(1, 500);
+                planet[i] = new Planet($"Planet{planetNumber}", $"Trader{planetNumber}",
+                    (rand.Next(-50, 50)+rand.NextDouble()),
+                    (rand.Next(-50, 50)+rand.NextDouble()));
+            }
+            return planet;
+        }
 
     }
 }

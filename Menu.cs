@@ -12,6 +12,13 @@ namespace SpaceWar
                 "3 帮助"
             };
 
+            public static string[] market = {
+                "--市场--",
+                "1 买",
+                "2 卖",
+                "3 取消"
+            };
+
             public static string[] help = {
                 "--帮助菜单--",
                 "navigation - 显示导航信息，规划航线",

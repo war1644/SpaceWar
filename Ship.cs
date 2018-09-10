@@ -34,7 +34,7 @@ namespace SpaceWar
             int refuelPrice = maxFuel - currentFuel;
             if (player.credits - refuelPrice < 0)
             {
-                Console.WriteLine("没钱加油");
+                Console.WriteLine("没钱加燃料");
             }
             else
             {
