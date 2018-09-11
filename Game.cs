@@ -8,7 +8,7 @@ namespace SpaceWar
 
         public Good[] goods;
         public Ship[] ships;
-        public Player player;
+        static public Player player;
         // public string historyInput;
         static public bool docked = false;
         static public bool isJump = true;
@@ -97,7 +97,10 @@ namespace SpaceWar
                     Good[] planetGoods = player.planet.goods;
                     Display.Show(planetGoods);
                     choice = GetChoice();
-                    string info = player.BuyGood(planetGoods[choice],5);
+                    Good good = planetGoods[choice];
+                    Display.Show($"> 买多少的{good.name}？");
+                    byte number = GetChoice();
+                    string info = player.BuyGood(good,number);
                     Display.Show(info);
                 }
                 else if(userInput == "sell" && docked)
@@ -105,6 +108,13 @@ namespace SpaceWar
                     Display.ShowIndex(player.goodNameList);
                     choice = GetChoice();
                     string info = player.SellGood(choice);
+                    Display.Show(info);
+                }
+                else if(userInput == "ship" && docked)
+                {
+                    Display.Show(ships);
+                    choice = GetChoice();
+                    string info = player.BuyShip(ships[choice]);
                     Display.Show(info);
                 }
                 else if(userInput == "state")
@@ -118,6 +128,10 @@ namespace SpaceWar
                 else if(userInput == "repair" && docked)
                 {
                     player.ship.Repair(player);
+                }
+                else if(userInput == "upgrade" && docked)
+                {
+                    
                 }
                 else if(userInput == "simulator" && docked)
                 {
@@ -137,12 +151,13 @@ namespace SpaceWar
                 {
                     string galaxyName = player.planet.galaxy;
                     Planet[] planets = Galaxy.list[galaxyName];
-                    Display.AutoShow("请选择目标星球：");
+                    Display.Show("请选择目标星球：");
                     Display.Show(planets);
                     choice = GetChoice();
                     Display.AutoShow("锁定目标星球，开始巡航...");
                     bool success = player.SetGoToPlant(planets[choice]);
-                    if(success){
+                    if(success)
+                    {
                         Display.AutoShow($"到达 {planets[choice].name}");
                     }
                     else
@@ -152,7 +167,7 @@ namespace SpaceWar
                 }
                 else if(userInput == "undock" && docked)
                 {
-                    Display.AutoShow("已起飞");
+                    Display.AutoShow("飞船已升空");
                     docked = false;
                 }
                 else if(userInput == "save")
@@ -194,11 +209,6 @@ namespace SpaceWar
                     Display.AutoShow("关闭中...");
                     isWhile = false;
                 }
-                else if(userInput == "clear")
-                {
-                    Console.Clear();
-                }
-
                 Thread.Sleep(100);
 
             } while (isWhile);
@@ -243,7 +253,7 @@ namespace SpaceWar
         {
             foreach (var galaxyName in Galaxy.nameList)
             {
-                Planet[] planet = new Planet[rand.Next(2,5)];
+                Planet[] planet = new Planet[rand.Next(3,6)];
                 planet[0] = new Planet("星系跳跃门",galaxyName, 0, 0);
                 for (int i = 1; i < planet.Length; i++)
                 {

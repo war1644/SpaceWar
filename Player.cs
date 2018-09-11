@@ -15,7 +15,7 @@ namespace SpaceWar
          //货物仓库
          public Dictionary<string,Good> cargo = new Dictionary<string,Good>();
          public string[] goodNameList;
-         public int maxCargo = 50;
+         public int goodsCount = 0;
          public Ship ship;
 
 
@@ -27,7 +27,9 @@ namespace SpaceWar
                 $"Money：{credits}，旅行时间： {year} 年 {day} 天",
                 $"当前位置：{planet.galaxy} -- {planet.name}，剩余燃料： {ship.fuel}",
                 $"飞行状态：{(!Game.docked).ToString()}",
-                $"杀敌：{kill}"
+                $"杀敌：{kill}",
+                $"空余货仓：{(ship.cargo-goodsCount)}",
+
             };
         }
 
@@ -39,11 +41,11 @@ namespace SpaceWar
             }
         }
 
-        public Player(string userName,int money,Ship shipValue,Planet planet)
+        public Player(string userName,int money,Ship newShip,Planet planet)
         {
             name = userName;
             credits = money;
-            ship = shipValue;
+            ship = newShip;
             SetPlant(planet);
         }
 
@@ -111,23 +113,26 @@ namespace SpaceWar
             cargo.Remove(goodName);
         }
 
-        internal string TryBuyShip(Ship[] ships)
+        internal string BuyShip(Ship newShip)
         {
-            int choice;
-            do
+            if ((credits + ship.price) >= newShip.price)
             {
-                choice = int.Parse(Game.GetInput());
-            } while (choice < 0);
-            if (choice == 0)
-            {
-                return "想想还是算了";
-            }
-            if (credits + ship.price >= ships[choice].price)
-            {
+                //买小船,抛弃货物
+                if(goodsCount < newShip.cargo)
+                {
+                    foreach (KeyValuePair<string,Good> item in cargo)
+                    {
+                        goodsCount -= item.Value.quantity;
+                        RemoveCargoGood(item.Key);
+                        if(goodsCount <= newShip.cargo){
+                            break;
+                        }
+                    }
+                }
+
                 AddCredits(ship.price);
-                AddCredits(-ships[choice].price);
-                ship = ships[choice];
-                maxCargo = ship.cargo;
+                AddCredits(-newShip.price);
+                ship = newShip;
                 return "新船入手";
             }
             return "没钱";
@@ -135,9 +140,15 @@ namespace SpaceWar
 
         internal string SellGood(byte index)
         {
-            string name = goodNameList[index];
-            var totalPrice = cargo[name].price * cargo[name].quantity;
-            RemoveCargoGood(name);
+            string tmpName = goodNameList[index];
+            if(!cargo.ContainsKey(tmpName))
+            {
+                return "没有这个货物";
+            }
+            Good good = cargo[tmpName];
+            int totalPrice = good.price * good.quantity;
+            goodsCount -= good.quantity;
+            RemoveCargoGood(tmpName);
             AddCredits(totalPrice);
             return $"{name} 已卖";
         }
@@ -145,9 +156,10 @@ namespace SpaceWar
         public string BuyGood(Good good, byte buyQuantity)
         {
             int totalPrice = good.price * buyQuantity;
-            int surplus = maxCargo - cargo.Count;
+            int surplus = ship.cargo - goodsCount;
             if (credits >= totalPrice && good.quantity <= surplus)
             {
+                goodsCount += buyQuantity;
                 good.quantity = buyQuantity;
                 AddCargoGood(good);
                 AddCredits(-(totalPrice));

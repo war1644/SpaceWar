@@ -46,7 +46,8 @@ namespace SpaceWar
             byte indexKey = 0;
             foreach (var item in planets)
             {
-                Console.WriteLine($"{indexKey} {item.name}");
+                int distance = Math.Abs(item.distance - Game.player.planet.distance);
+                Console.WriteLine($"{indexKey} {item.name}，坐标：({item.x},{item.y})，距离：{distance}");
                 indexKey++;
             }
         }
