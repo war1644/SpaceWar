@@ -16,7 +16,7 @@ namespace SpaceWar
          public Dictionary<string,Good> cargo = new Dictionary<string,Good>();
          public string[] goodNameList;
          public int maxCargo = 50;
-         Ship ship;
+         public Ship ship;
 
 
         public string[] GetState ()

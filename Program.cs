@@ -7,7 +7,7 @@ namespace SpaceWar
     {
         static void Main(string[] args)
         {
-            Console.Title = "废土战记";
+            Console.Title = "自由枪骑兵";
 
             var game = new Game();
         }

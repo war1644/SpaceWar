@@ -111,6 +111,14 @@ namespace SpaceWar
                 {
                     Display.Show(player.GetState());
                 }
+                else if(userInput == "refuel" && docked)
+                {
+                    player.ship.Refuel(player);
+                }
+                else if(userInput == "repair" && docked)
+                {
+                    player.ship.Repair(player);
+                }
                 else if(userInput == "simulator" && docked)
                 {
                     
@@ -124,7 +132,6 @@ namespace SpaceWar
                         docked = true;
                         Display.AutoShow("停靠完成");
                     }
-                    
                 }
                 else if(userInput == "goto" && !docked)
                 {
@@ -219,18 +226,6 @@ namespace SpaceWar
             };
         }
 
-        //各星球价格随机，形成差价
-        private Good[] SetRandomGoodsPrice()
-        {
-            Good[] tmpGoods = goods;
-            for (int i = 0; i < tmpGoods.Length; i++)
-            {
-                tmpGoods[i].price = rand.Next(tmpGoods[i].price/10, tmpGoods[i].price);
-            }
-            return tmpGoods;
-
-        }
-
         void CreateShips()
         {
             ships = new Ship[]
@@ -244,9 +239,6 @@ namespace SpaceWar
                 new Ship("帝国歼星舰",100000, 2000, 5, 1000000, 100),
             };
         }
-        /**
-        
-         */
         void CreateGalaxys()
         {
             foreach (var galaxyName in Galaxy.nameList)
@@ -269,6 +261,18 @@ namespace SpaceWar
                 }
                 Galaxy.list.Add(galaxyName,planet);
             }
+        }
+
+        //各星球价格随机，形成差价
+        Good[] SetRandomGoodsPrice()
+        {
+            Good[] tmpGoods = goods;
+            for (int i = 0; i < tmpGoods.Length; i++)
+            {
+                tmpGoods[i].price = rand.Next(tmpGoods[i].price/10, tmpGoods[i].price);
+            }
+            return tmpGoods;
+
         }
 
         

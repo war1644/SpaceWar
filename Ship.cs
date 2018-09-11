@@ -40,7 +40,7 @@ namespace SpaceWar
             return true;
         }
 
-        public void RefuelShip(Player player)
+        public void Refuel(Player player)
         {
             int refuelPrice = maxFuel - fuel;
             if (player.credits - refuelPrice < 0)
@@ -52,6 +52,21 @@ namespace SpaceWar
                 Console.WriteLine($"燃料已加满，花费{refuelPrice}");
                 player.AddCredits(-refuelPrice);
                 fuel = maxFuel;
+            }
+        }
+
+        public void Repair(Player player)
+        {
+            int repairPrice = maxHp - hp;
+            if (player.credits - repairPrice < 0)
+            {
+                Console.WriteLine("没钱修理");
+            }
+            else
+            {
+                Console.WriteLine($"修理完成，花费{repairPrice}");
+                player.AddCredits(-repairPrice);
+                hp = maxHp;
             }
         }
 

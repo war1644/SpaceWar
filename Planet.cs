@@ -7,7 +7,7 @@ namespace SpaceWar
     {
 
         internal readonly string name;
-        internal readonly string spaceStation;
+        // internal readonly string spaceStation;
         internal readonly string galaxy;
         internal readonly int x;
         internal readonly int y;
