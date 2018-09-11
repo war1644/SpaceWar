@@ -60,8 +60,11 @@ namespace SpaceWar
         public bool SetGoToPlant(Planet toPlanet)
         {
             int distance = CalculatePlanetsDistance(toPlanet);
+
             if(ship.CalculateFuel(distance))
             {
+                day += (distance/ship.speed) <= 0 ? 1 : (distance/ship.speed);
+                CalculateYears();
                 SetPlant(toPlanet);
                 return true;
             }

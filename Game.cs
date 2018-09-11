@@ -110,6 +110,10 @@ namespace SpaceWar
                     string info = player.SellGood(choice);
                     Display.Show(info);
                 }
+                else if(userInput == "good")
+                {
+                    Display.Show(player.CargoInventory());
+                }
                 else if(userInput == "ship" && docked)
                 {
                     Display.Show(ships);
