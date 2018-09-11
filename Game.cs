@@ -81,15 +81,23 @@ namespace SpaceWar
             string userInput; 
             do
             {
-                Display.Show("\n> 等待指令中... ");
+                if(docked)
+                {
+                    Display.Show("\n> 已停靠，等待指令中... ");
+                }
+                else
+                {
+                    Display.Show("\n> 等待指令中... ");
+                }
                 userInput = GetInput();
 
 
                 if(userInput == "buy" && docked)
                 {
-                    Display.Show(goods);
+                    Good[] planetGoods = player.planet.goods;
+                    Display.Show(planetGoods);
                     choice = GetChoice();
-                    string info = player.BuyGood(goods[choice],5);
+                    string info = player.BuyGood(planetGoods[choice],5);
                     Display.Show(info);
                 }
                 else if(userInput == "sell" && docked)
@@ -109,10 +117,36 @@ namespace SpaceWar
                 }
                 else if(userInput == "dock" && !docked)
                 {
+                    if(player.planet.name != "星系跳跃门")
+                    {
                         Display.AutoShow("已发出停靠请求");
                         Display.AutoShow("获得停靠许可，开始停靠...");
                         docked = true;
                         Display.AutoShow("停靠完成");
+                    }
+                    
+                }
+                else if(userInput == "goto" && !docked)
+                {
+                    string galaxyName = player.planet.galaxy;
+                    Planet[] planets = Galaxy.list[galaxyName];
+                    Display.AutoShow("请选择目标星球：");
+                    Display.Show(planets);
+                    choice = GetChoice();
+                    Display.AutoShow("锁定目标星球，开始巡航...");
+                    bool success = player.SetGoToPlant(planets[choice]);
+                    if(success){
+                        Display.AutoShow($"到达 {planets[choice].name}");
+                    }
+                    else
+                    {
+                        Display.AutoShow($"距离过远，需要更多的燃料");
+                    }
+                }
+                else if(userInput == "undock" && docked)
+                {
+                    Display.AutoShow("已起飞");
+                    docked = false;
                 }
                 else if(userInput == "save")
                 {
@@ -122,7 +156,7 @@ namespace SpaceWar
                 {
                     
                 }
-                else if(userInput == "jump" && docked)
+                else if(userInput == "jump" && !docked)
                 {
                     if(isJump)
                     {
@@ -131,7 +165,7 @@ namespace SpaceWar
                         Display.ShowIndex(Galaxy.showNameList);
                         choice = GetChoice();
                         string galaxyName = Galaxy.nameList[choice];
-                        if(galaxyName == player.currentPlanet.galaxy)
+                        if(galaxyName == player.planet.galaxy)
                         {
                             Display.AutoShow("ERROR,不能选择当前星区");
                         }
@@ -139,7 +173,7 @@ namespace SpaceWar
                         {
                             Display.AutoShow("开始跃迁...");
                             Planet planet = Galaxy.list[galaxyName][0];
-                            player.SetCurrentLocation(planet);
+                            player.SetPlant(planet);
                             Display.AutoShow($"跃迁完成，欢迎来到 {galaxyName} ");
                         }
                     }
@@ -237,14 +271,7 @@ namespace SpaceWar
             }
         }
 
-        public int CalculatePlanetsDistance(Planet start,Planet end)
-        {
-            if(end.name == "星系跳跃门")
-            {
-                return start.distance;
-            }
-            return end.distance - start.distance;
-        }
+        
 
     }
 }

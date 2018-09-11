@@ -11,12 +11,12 @@ namespace SpaceWar
          public int year=0;
          public int day=0;
          public int kill=0;
-         internal Planet currentPlanet;
+         internal Planet planet;
          //货物仓库
          public Dictionary<string,Good> cargo = new Dictionary<string,Good>();
          public string[] goodNameList;
          public int maxCargo = 50;
-         Ship currentShip;
+         Ship ship;
 
 
         public string[] GetState ()
@@ -25,7 +25,7 @@ namespace SpaceWar
             {
                 "--状态--",
                 $"Money：{credits}，旅行时间： {year} 年 {day} 天",
-                $"当前位置：{currentPlanet.galaxy} -- {currentPlanet.name}，剩余燃料： {currentShip.currentFuel}",
+                $"当前位置：{planet.galaxy} -- {planet.name}，剩余燃料： {ship.fuel}",
                 $"飞行状态：{(!Game.docked).ToString()}",
                 $"杀敌：{kill}"
             };
@@ -39,12 +39,12 @@ namespace SpaceWar
             }
         }
 
-        public Player(string userName,int money,Ship ship,Planet planet)
+        public Player(string userName,int money,Ship shipValue,Planet planet)
         {
             name = userName;
             credits = money;
-            currentShip = ship;
-            SetCurrentLocation(planet);
+            ship = shipValue;
+            SetPlant(planet);
         }
 
 
@@ -55,9 +55,21 @@ namespace SpaceWar
         }
 
 
-        public void SetCurrentLocation(Planet planet)
+        public bool SetGoToPlant(Planet toPlanet)
         {
-            currentPlanet = planet;
+            int distance = CalculatePlanetsDistance(toPlanet);
+            if(ship.CalculateFuel(distance))
+            {
+                SetPlant(toPlanet);
+                return true;
+            }
+            return false;
+            
+        }
+
+        public void SetPlant(Planet toPlanet)
+        {
+            planet = toPlanet;
             if(planet.name == "星系跳跃门")
             {
                 Game.docked = false;
@@ -65,9 +77,18 @@ namespace SpaceWar
             }
             else
             {
-                Game.docked = true;
+                Game.docked = false;
                 Game.isJump = false;
             }
+        }
+
+        public int CalculatePlanetsDistance(Planet toPlanet)
+        {
+            if(toPlanet.name == "星系跳跃门")
+            {
+                return Math.Abs(planet.distance);
+            }
+            return Math.Abs(toPlanet.distance - planet.distance);
         }
     
 
@@ -101,12 +122,12 @@ namespace SpaceWar
             {
                 return "想想还是算了";
             }
-            if (credits + currentShip.price >= ships[choice].price)
+            if (credits + ship.price >= ships[choice].price)
             {
-                AddCredits(currentShip.price);
+                AddCredits(ship.price);
                 AddCredits(-ships[choice].price);
-                currentShip = ships[choice];
-                maxCargo = currentShip.cargo;
+                ship = ships[choice];
+                maxCargo = ship.cargo;
                 return "新船入手";
             }
             return "没钱";

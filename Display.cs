@@ -41,6 +41,15 @@ namespace SpaceWar
                 indexKey++;
             }
         }
+        public static void Show(Planet[] planets)
+        {
+            byte indexKey = 0;
+            foreach (var item in planets)
+            {
+                Console.WriteLine($"{indexKey} {item.name}");
+                indexKey++;
+            }
+        }
 
         public static void Show(Ship[] ships)
         {

@@ -10,34 +10,39 @@ namespace SpaceWar
         public readonly int price;
         public readonly int maxFuel;
         public readonly int maxHp;
-        public int currentFuel;
-        public int currentHp;
+        public int fuel;
+        public int hp;
 
-        public Ship(string shipName,int shipHp, int shipCargo, int shipSpeed, int shipPrice,int fuel,string shipDescribe="")
+        public Ship(string shipName,int shipHp, int shipCargo, int shipSpeed, int shipPrice,int shipFuel,string shipDescribe="")
         {
             name = shipName;
-            maxHp = shipHp;
+            hp = maxHp = shipHp;
             cargo = shipCargo;
             speed = shipSpeed;
             price = shipPrice;
-            maxFuel = fuel;
-            currentFuel = fuel;
+            fuel = maxFuel = shipFuel;
             describe = shipDescribe;
         }
 
-        public void CalculateFuel(int fuel)
+        public bool CalculateFuel(int fuelValue)
         {
-            currentFuel += fuel;
+            int tmpFuel = fuel + fuelValue;
+            if(tmpFuel<0) return false;
+            fuel = tmpFuel;
+            return true;
         }
 
-        public void CalculateHp(int hp)
+        public bool CalculateHp(int hpValue)
         {
-            currentHp += hp;
+            int tmpHp = hp + hpValue;
+            if(tmpHp<0) return false;
+            hp = tmpHp;
+            return true;
         }
 
         public void RefuelShip(Player player)
         {
-            int refuelPrice = maxFuel - currentFuel;
+            int refuelPrice = maxFuel - fuel;
             if (player.credits - refuelPrice < 0)
             {
                 Console.WriteLine("没钱加燃料");
@@ -46,7 +51,7 @@ namespace SpaceWar
             {
                 Console.WriteLine($"燃料已加满，花费{refuelPrice}");
                 player.AddCredits(-refuelPrice);
-                currentFuel = maxFuel;
+                fuel = maxFuel;
             }
         }
 
