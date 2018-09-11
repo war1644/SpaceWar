@@ -28,6 +28,8 @@ namespace SpaceWar
                 "data - 显示星球资料",
                 "save - 保存游戏",
                 "load - 载入游戏",
+                "clear - 清屏",
+                "load - 载入游戏",
                 "quit - 退出",
             };
             public static string[] docked = {

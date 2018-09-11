@@ -13,9 +13,10 @@ namespace SpaceWar
         public int currentFuel;
         public int currentHp;
 
-        public Ship(string shipName, int shipCargo, int shipSpeed, int shipPrice,int fuel,string shipDescribe="")
+        public Ship(string shipName,int shipHp, int shipCargo, int shipSpeed, int shipPrice,int fuel,string shipDescribe="")
         {
             name = shipName;
+            maxHp = shipHp;
             cargo = shipCargo;
             speed = shipSpeed;
             price = shipPrice;
@@ -24,9 +25,14 @@ namespace SpaceWar
             describe = shipDescribe;
         }
 
-        public void SetCurrentFuel(int fuel)
+        public void CalculateFuel(int fuel)
         {
             currentFuel += fuel;
+        }
+
+        public void CalculateHp(int hp)
+        {
+            currentHp += hp;
         }
 
         public void RefuelShip(Player player)

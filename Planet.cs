@@ -11,7 +11,9 @@ namespace SpaceWar
         internal readonly string galaxy;
         internal readonly int x;
         internal readonly int y;
-        public List<int> distanceBetweenPlanets = new List<int>();
+        public Good[] goods;
+        public int distance;
+        
 
 
         public Planet(string plantName,string galaxyName,int xCordinate,int yCordinate)
@@ -20,17 +22,6 @@ namespace SpaceWar
             x = xCordinate;
             y = yCordinate;
             galaxy = galaxyName;
-        }
-
-        
-        public void SetDistanceToPlanet(int distance)
-        {
-            distanceBetweenPlanets.Add(distance);
-        }
-
-        public List<int> GetDistanceToPlanet()
-        {
-            return distanceBetweenPlanets;
         }
 
     }
