@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace SpaceWar
 {
-    class Language
+    class L
     {
         public Dictionary<string,string[]> gameText = new Dictionary<string,string[]>
         {

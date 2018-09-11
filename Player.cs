@@ -177,6 +177,19 @@ namespace SpaceWar
             return "货仓空间不够";
             
         }
+        public string AddGood(Good good, byte buyQuantity)
+        {
+            int surplus = ship.cargo - goodsCount;
+            if (good.quantity <= surplus)
+            {
+                goodsCount += buyQuantity;
+                good.quantity = buyQuantity;
+                AddCargoGood(good);
+                return "已存入货仓";
+            }
+            return "货仓空间不够";
+            
+        }
 
         public List<string> CargoInventory ()
         {
