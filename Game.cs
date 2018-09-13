@@ -261,7 +261,7 @@ namespace SpaceWar
         {
             foreach (var galaxyName in Galaxy.nameList)
             {
-                Planet[] planet = new Planet[rand.Next(3,6)];
+                Planet[] planet = new Planet[rand.Next(5,9)];
                 planet[0] = new Planet("星系跳跃门",galaxyName, 0, 0);
                 for (int i = 1; i < planet.Length; i++)
                 {
