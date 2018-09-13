@@ -293,7 +293,9 @@ namespace SpaceWar
         //各星球价格随机，形成差价
         Good[] SetRandomGoodsPrice()
         {
-            Good[] tmpGoods = goods;
+            Good[] tmpGoods = new Good[goods.Length]; 
+            Array.Copy(goods,tmpGoods,goods.Length);
+            
             for (int i = 0; i < tmpGoods.Length; i++)
             {
                 tmpGoods[i].price = rand.Next(tmpGoods[i].price/10, tmpGoods[i].price);

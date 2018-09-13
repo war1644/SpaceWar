@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 namespace SpaceWar
 {
-    class Display
+    internal class Display
     {       
         public static void Show(string[] menu)
         {
@@ -40,7 +40,7 @@ namespace SpaceWar
                 Console.WriteLine($"{indexKey} {item.name} {item.price} {(item.price/item.standardPrice)}");
                 indexKey++;
             }
-            
+
         }
         public static void Show(Planet[] planets)
         {
