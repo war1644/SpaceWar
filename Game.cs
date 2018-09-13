@@ -139,7 +139,7 @@ namespace SpaceWar
                 }
                 else if(userInput == "simulator" && docked)
                 {
-                    
+                    new Battle(player);
                 }
                 else if(userInput == "dock" && !docked)
                 {
@@ -159,6 +159,10 @@ namespace SpaceWar
                     Display.Show(planets);
                     choice = GetChoice();
                     Display.AutoShow("锁定目标星球，开始巡航...");
+                    int battle = rand.Next(0,9);
+                    if(battle>6){
+                        new Battle(player);
+                    }
                     bool success = player.SetGoToPlant(planets[choice]);
                     if(success)
                     {
