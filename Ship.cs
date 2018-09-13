@@ -16,11 +16,13 @@ namespace SpaceWar
         public Ship(string shipName,int shipHp, int shipCargo, int shipSpeed, int shipPrice,int shipFuel,string shipDescribe="")
         {
             name = shipName;
-            hp = maxHp = shipHp;
+            hp = shipHp;
+            maxHp = shipHp;
             cargo = shipCargo;
             speed = shipSpeed;
             price = shipPrice;
-            fuel = maxFuel = shipFuel;
+            fuel = shipFuel;
+            maxFuel = shipFuel;
             describe = shipDescribe;
         }
 

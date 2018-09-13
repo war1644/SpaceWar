@@ -20,25 +20,25 @@ namespace SpaceWar
             };
 
             public static string[] help = {
-                "--帮助菜单--",
+                "--巡航状态帮助菜单--",
                 "navigation - 显示导航信息，规划航线",
-                "jump - 仅在‘星系跳跃大门‘可用，进入其他星系",
-                "dock - 停靠附近空间站",
+                "jump - 仅在星系跳跃大门可用，进入其他星系",
+                "dock - 停靠附近星球空间站",
                 "state - 显示当前状态",
                 "data - 显示星球资料",
                 "save - 保存游戏",
                 "load - 载入游戏",
-                "clear - 清屏",
                 "load - 载入游戏",
                 "quit - 退出",
             };
             public static string[] docked = {
-                "--停机坪--",
+                "--空间站内帮助菜单--",
+                "buy - 购买商品",
+                "sell - 出售商品",
                 "repair - 修理",
                 "refuel - 加燃料",
-                "order ship - 购买飞船",
-                "order upgrades - 升级飞船",
-                "market - 市场",
+                "ship - 购买飞船",
+                "upgrades - 升级飞船",
                 "simulator - 模拟战斗测试",
                 "undock - 离开"
             };

@@ -8,6 +8,7 @@ namespace SpaceWar
 
         public Battle(Player player)
         {
+            Display.Show($"遭遇舰队");
             Random rand =  Game.rand;
             playerHp = player.ship.hp;
             aiHp = rand.Next(100,player.ship.maxHp);

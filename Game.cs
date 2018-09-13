@@ -43,6 +43,7 @@ namespace SpaceWar
             {
                 try
                 {
+                    Display.Show("\n> 请选择：");
                     choice = byte.Parse(Console.ReadLine());
                     isInput = false;
                 }
@@ -83,11 +84,11 @@ namespace SpaceWar
             {
                 if(docked)
                 {
-                    Display.Show("\n> 已停靠，等待指令中... ");
+                    Display.Show("\n> 已停靠，等待指令中...(帮助请输入'help') ");
                 }
                 else
                 {
-                    Display.Show("\n> 等待指令中... ");
+                    Display.Show("\n> 等待指令中... (帮助请输入'help')");
                 }
                 userInput = GetInput();
 
@@ -120,6 +121,14 @@ namespace SpaceWar
                     choice = GetChoice();
                     string info = player.BuyShip(ships[choice]);
                     Display.Show(info);
+                }
+                else if(userInput == "help")
+                {
+                    if(docked){
+                        Display.Show(Menu.docked);
+                    }else{
+                        Display.Show(Menu.help);
+                    }
                 }
                 else if(userInput == "state")
                 {
@@ -249,7 +258,7 @@ namespace SpaceWar
             ships = new Ship[]
             {
                 new Ship("采矿船",1000, 150, 3, 100000, 25),
-                new Ship("轻型货机",500, 50, 3, 25000, 10),
+                new Ship("轻型货机",500, 50, 3, 25000, 20),
                 new Ship("PLA战斗机",300, 300, 4, 75000, 20),
                 new Ship("CR90轻巡洋舰",3000, 750, 7, 125000, 30),
                 new Ship("PLA巡洋舰",5000, 50, 9, 400000, 40),
