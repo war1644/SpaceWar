@@ -37,9 +37,10 @@ namespace SpaceWar
             byte indexKey = 0;
             foreach (var item in goods)
             {
-                Console.WriteLine($"{indexKey} {item.name} {item.price} {item.price/item.standardPrice}");
+                Console.WriteLine($"{indexKey} {item.name} {item.price} {(item.price/item.standardPrice)}");
                 indexKey++;
             }
+            
         }
         public static void Show(Planet[] planets)
         {
