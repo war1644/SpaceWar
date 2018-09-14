@@ -6,11 +6,11 @@ namespace SpaceWar
     public class Planet
     {
 
-        internal readonly string name;
+        public string name;
         // internal readonly string spaceStation;
-        internal readonly string galaxy;
-        internal readonly int x;
-        internal readonly int y;
+        public string galaxy;
+        public int x;
+        public int y;
         public Good[] goods;
         // public Ship[] ships;
         public List<Ship> fleet;

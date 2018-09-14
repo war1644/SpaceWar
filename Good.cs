@@ -5,7 +5,7 @@ namespace SpaceWar
     {
         public readonly string describe;
         public byte quantity=0;
-        public readonly string name;
+        public string name;
         public int price;
         public int standardPrice;
 

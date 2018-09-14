@@ -3,13 +3,13 @@ namespace SpaceWar
 {
     public class Ship
     {
-        public readonly string name;
-        public readonly string describe;
-        public readonly int cargo;
-        public readonly int speed;
-        public readonly int price;
-        public readonly int maxFuel;
-        public readonly int maxHp;
+        public string name;
+        public string describe;
+        public int cargo;
+        public int speed;
+        public int price;
+        public int maxFuel;
+        public int maxHp;
         public int fuel;
         public int hp;
 
