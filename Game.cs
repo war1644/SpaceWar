@@ -69,6 +69,8 @@ namespace SpaceWar
             player = new Player("路漫漫",9999999,ships[1],planet);
 
             string info = player.BuyGood(goods[1],5);
+            Display.Show(Menu.help);
+
             test();
  
             
