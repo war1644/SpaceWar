@@ -1,7 +1,7 @@
 ﻿using System;
 namespace SpaceWar
 {
-    class Good
+    public class Good
     {
         public readonly string describe;
         public byte quantity=0;
@@ -16,6 +16,18 @@ namespace SpaceWar
             standardPrice = goodPrice;
             describe = goodDescribe;
         }
+
+        public Good()
+        {
+            
+        }
+
+//         public object clone()
+//         {
+//             Good copyGood = new Good(this.name,this.price,this.describe);
+//             copyGood.price = this.price;
+// 　　　　　　  return copyGood; 
+//         }
 
         
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SpaceWar
 {
-    class Planet
+    public class Planet
     {
 
         internal readonly string name;
@@ -12,7 +12,7 @@ namespace SpaceWar
         internal readonly int x;
         internal readonly int y;
         public Good[] goods;
-        public Ship[] ships;
+        // public Ship[] ships;
         public List<Ship> fleet;
         public int distance;
         

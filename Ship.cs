@@ -1,7 +1,7 @@
 ﻿using System;
 namespace SpaceWar
 {
-    class Ship
+    public class Ship
     {
         public readonly string name;
         public readonly string describe;
@@ -24,6 +24,9 @@ namespace SpaceWar
             fuel = shipFuel;
             maxFuel = shipFuel;
             describe = shipDescribe;
+        }
+        public Ship()
+        {
         }
 
         public bool CalculateFuel(int fuelValue)

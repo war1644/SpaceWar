@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SpaceWar
 {
-    internal class Player
+    public class Player
     {
          readonly string name;
          public int credits=0;

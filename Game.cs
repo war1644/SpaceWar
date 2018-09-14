@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using System.IO;
 namespace SpaceWar
 {
     class Game
@@ -276,7 +278,7 @@ namespace SpaceWar
             {
                 Planet[] planet = new Planet[rand.Next(5,9)];
                 planet[0] = new Planet("星系跳跃门",galaxyName, 0, 0);
-                
+
                 //设置跳跃门舰队（星系主力舰队）
                 List<Ship> masterFleet1 = SetRandomFleet();
                 List<Ship> masterFleet2 = SetRandomFleet();
@@ -309,9 +311,10 @@ namespace SpaceWar
         Good[] SetRandomGoodsPrice()
         {
             Good[] tmpGoods = new Good[goods.Length]; 
-            Array.Copy(goods,tmpGoods,goods.Length);
-            for (int i = 0; i < tmpGoods.Length; i++)
+
+            for (int i = 0; i < goods.Length; i++)
             {
+                tmpGoods[i] = Clone<Good>(goods[i]);
                 tmpGoods[i].price = rand.Next(tmpGoods[i].price/10, tmpGoods[i].price);
             }
             return tmpGoods;
@@ -326,10 +329,22 @@ namespace SpaceWar
             for (int i = 0; i < tmpNumber; i++)
             {
                 int tmpRand = rand.Next(2,ships.Length);
-                tmpShips.Add(ships[tmpRand]);
+                tmpShips.Add(Clone<Ship>(ships[tmpRand]));
             }
             return tmpShips;
 
+        }
+
+        //对象深拷贝
+        public static T Clone<T>(T RealObject) 
+        {  
+            using(Stream stream=new MemoryStream())
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                serializer.Serialize(stream, RealObject);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)serializer.Deserialize(stream);
+            }
         }
 
     }
