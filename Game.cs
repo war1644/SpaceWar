@@ -226,6 +226,10 @@ namespace SpaceWar
                     Display.AutoShow("关闭中...");
                     isWhile = false;
                 }
+                else if(userInput == "navgation")
+                {
+                    Display.Show(Galaxy.map());
+                }
                 Thread.Sleep(100);
 
             } while (isWhile);
@@ -272,6 +276,13 @@ namespace SpaceWar
             {
                 Planet[] planet = new Planet[rand.Next(5,9)];
                 planet[0] = new Planet("星系跳跃门",galaxyName, 0, 0);
+                
+                //设置跳跃门舰队（星系主力舰队）
+                List<Ship> masterFleet1 = SetRandomFleet();
+                List<Ship> masterFleet2 = SetRandomFleet();
+                masterFleet1.AddRange(masterFleet2);
+                planet[0].fleet = masterFleet1;
+
                 for (int i = 1; i < planet.Length; i++)
                 {
                     int planetNumber = rand.Next(1, 500);
@@ -287,7 +298,8 @@ namespace SpaceWar
                     planet[i].distance = distance;
 
                     //设置星球护卫舰队
-
+                    List<Ship> localFleet = SetRandomFleet();
+                    planet[i].fleet = localFleet;
                 }
                 Galaxy.list.Add(galaxyName,planet);
             }
@@ -307,15 +319,16 @@ namespace SpaceWar
         }
 
         //为各星球生成舰队
-        Good[] SetRandomFleet()
+        List<Ship> SetRandomFleet()
         {
-            Good[] tmpGoods = new Good[goods.Length]; 
-            Array.Copy(goods,tmpGoods,goods.Length);
-            for (int i = 0; i < tmpGoods.Length; i++)
+            int tmpNumber = rand.Next(1,9);
+            List<Ship> tmpShips = new List<Ship>();
+            for (int i = 0; i < tmpNumber; i++)
             {
-                tmpGoods[i].price = rand.Next(tmpGoods[i].price/10, tmpGoods[i].price);
+                int tmpRand = rand.Next(2,ships.Length);
+                tmpShips.Add(ships[tmpRand]);
             }
-            return tmpGoods;
+            return tmpShips;
 
         }
 

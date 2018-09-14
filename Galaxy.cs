@@ -37,6 +37,21 @@ namespace SpaceWar
             return inventory;
         }
 
+        static public List<string> map()
+        {
+            var inventory = new List<string>();
+            foreach (KeyValuePair<string,Planet[]> item in Galaxy.list)
+            {
+                string tmpStr = $"* {item.Key} |";
+                foreach (Planet planet in item.Value)
+                {
+                    tmpStr += $"\n    --{planet.name}，防御舰船：{planet.fleet.Count}";
+                }
+                inventory.Add(tmpStr);
+            }
+            return inventory;
+        }
+
         
 
     }
