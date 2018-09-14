@@ -21,7 +21,8 @@ namespace SpaceWar
 
             public static string[] help = {
                 "--巡航状态帮助菜单--",
-                "navigation - 显示导航信息，规划航线",
+                "map - 显示地图信息",
+                "goto - 选择前往星球",
                 "jump - 仅在星系跳跃大门可用，进入其他星系",
                 "dock - 停靠附近星球空间站",
                 "cargo - 货仓物品列表",

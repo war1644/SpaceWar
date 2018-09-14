@@ -171,7 +171,7 @@ namespace SpaceWar
                     choice = GetChoice();
                     Display.AutoShow("锁定目标星球，开始巡航...");
                     int battle = rand.Next(0,9);
-                    if(battle>6){
+                    if(battle>5){
                         new Battle(player);
                     }
                     bool success = player.SetGoToPlant(planets[choice]);
@@ -228,7 +228,7 @@ namespace SpaceWar
                     Display.AutoShow("关闭中...");
                     isWhile = false;
                 }
-                else if(userInput == "navgation")
+                else if(userInput == "map")
                 {
                     Display.Show(Galaxy.map());
                 }

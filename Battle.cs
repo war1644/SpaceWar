@@ -30,7 +30,7 @@ namespace SpaceWar
                 }else{
                     Display.AutoShow("敌人气势汹汹");
                     Display.AutoShow($"{weapon[weaponIndex]} 密集射来！");
-                    Display.AutoShow($"我方机体受损");
+                    Display.AutoShow($"我方机体受损，装甲减少{aiHp}");
                     // playerHp -=  weaponHit[aiWeaponIndex];
                     player.ship.CalculateHp(-aiHp);
                     aiHp=0;
