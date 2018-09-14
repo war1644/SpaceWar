@@ -27,7 +27,7 @@ namespace SpaceWar
                 $"Money：{credits}，旅行时间： {year} 年 {day} 天",
                 $"位置：{planet.galaxy} -- {planet.name}，旗舰：{ship.name}",
                 $"燃料： {ship.fuel}，飞行状态：{(!Game.docked).ToString()}",
-                $"杀敌：{kill}",
+                $"装甲：{ship.hp}，杀敌：{kill}",
                 $"空余货仓：{(ship.cargo-goodsCount)}",
 
             };

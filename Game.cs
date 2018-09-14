@@ -111,7 +111,7 @@ namespace SpaceWar
                     string info = player.SellGood(choice);
                     Display.Show(info);
                 }
-                else if(userInput == "good")
+                else if(userInput == "cargo")
                 {
                     Display.Show(player.CargoInventory());
                 }
@@ -285,6 +285,9 @@ namespace SpaceWar
                     Good[] localGoods = SetRandomGoodsPrice();
                     planet[i].goods = localGoods;
                     planet[i].distance = distance;
+
+                    //设置星球护卫舰队
+
                 }
                 Galaxy.list.Add(galaxyName,planet);
             }
@@ -295,7 +298,6 @@ namespace SpaceWar
         {
             Good[] tmpGoods = new Good[goods.Length]; 
             Array.Copy(goods,tmpGoods,goods.Length);
-            
             for (int i = 0; i < tmpGoods.Length; i++)
             {
                 tmpGoods[i].price = rand.Next(tmpGoods[i].price/10, tmpGoods[i].price);
@@ -304,7 +306,18 @@ namespace SpaceWar
 
         }
 
-        
+        //为各星球生成舰队
+        Good[] SetRandomFleet()
+        {
+            Good[] tmpGoods = new Good[goods.Length]; 
+            Array.Copy(goods,tmpGoods,goods.Length);
+            for (int i = 0; i < tmpGoods.Length; i++)
+            {
+                tmpGoods[i].price = rand.Next(tmpGoods[i].price/10, tmpGoods[i].price);
+            }
+            return tmpGoods;
+
+        }
 
     }
 }

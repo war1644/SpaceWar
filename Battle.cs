@@ -37,6 +37,7 @@ namespace SpaceWar
                 }
             }
             Display.AutoShow($"战斗结束");
+            player.kill += 1;
             if(haveGood>=8){
                 string tmpName = $"飞船零件{aiWeaponIndex}";
                 Display.AutoShow($"获得{tmpName}");

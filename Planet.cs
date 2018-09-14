@@ -12,6 +12,8 @@ namespace SpaceWar
         internal readonly int x;
         internal readonly int y;
         public Good[] goods;
+        public Ship[] ships;
+        public Ship[] fleet;
         public int distance;
         
 

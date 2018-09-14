@@ -24,6 +24,7 @@ namespace SpaceWar
                 "navigation - 显示导航信息，规划航线",
                 "jump - 仅在星系跳跃大门可用，进入其他星系",
                 "dock - 停靠附近星球空间站",
+                "cargo - 货仓物品列表",
                 "state - 显示当前状态",
                 "data - 显示星球资料",
                 "save - 保存游戏",
