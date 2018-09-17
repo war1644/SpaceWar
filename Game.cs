@@ -45,7 +45,7 @@ namespace SpaceWar
             {
                 try
                 {
-                    Display.Show("\n> 请选择：");
+                    Display.Show("\n> 请输入：");
                     choice = byte.Parse(Console.ReadLine());
                     isInput = false;
                 }
@@ -339,6 +339,29 @@ namespace SpaceWar
 
         //对象深拷贝
         public static T Clone<T>(T RealObject) 
+        {  
+            using(Stream stream=new MemoryStream())
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                serializer.Serialize(stream, RealObject);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)serializer.Deserialize(stream);
+            }
+        }
+
+        //游戏存储
+        public static T Save<T>(T RealObject) 
+        {  
+            using(Stream stream=new MemoryStream())
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                serializer.Serialize(stream, RealObject);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)serializer.Deserialize(stream);
+            }
+        }
+
+        public static T Load<T>(T RealObject) 
         {  
             using(Stream stream=new MemoryStream())
             {
