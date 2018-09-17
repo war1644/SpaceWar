@@ -7,6 +7,7 @@ namespace SpaceWar
 {
     public class Game
     {
+        static string filePath = "save.xml";
 
         public Good[] goods;
         public Ship[] ships;
@@ -193,11 +194,11 @@ namespace SpaceWar
                 }
                 else if(userInput == "save")
                 {
-                    
+                    Save(this);
                 }
                 else if(userInput == "load")
                 {
-                    
+                    Load();
                 }
                 else if(userInput == "jump" && !docked)
                 {
@@ -350,27 +351,25 @@ namespace SpaceWar
         }
 
         //游戏存储
-        public static T Save<T>(T RealObject) 
+        public static void Save<T>(T RealObject) 
         {  
-            using(Stream stream=new MemoryStream())
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
-                serializer.Serialize(stream, RealObject);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)serializer.Deserialize(stream);
+                serializer.Serialize(fs, RealObject);
             }
         }
 
-        public static T Load<T>(T RealObject) 
+        public static T Load<T>() 
         {  
-            using(Stream stream=new MemoryStream())
+            using (FileStream fs = new FileStream(filePath, FileMode.Open))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
-                serializer.Serialize(stream, RealObject);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)serializer.Deserialize(stream);
+                return (T)serializer.Deserialize(fs);
             }
         }
+
+       
 
     }
 }
