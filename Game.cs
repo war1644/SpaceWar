@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using System.IO;
 namespace SpaceWar
 {
-    class Game
+    public class Game
     {
 
         public Good[] goods;
@@ -66,7 +66,7 @@ namespace SpaceWar
             CreateShips();
             CreateGalaxys();
             Planet planet = Galaxy.list["天狼星区"][0];
-            player = new Player("路漫漫",9999999,ships[1],planet);
+            player = new Player("路漫漫",9999,ships[1],planet);
 
             string info = player.BuyGood(goods[1],5);
             Display.Show(Menu.help);
